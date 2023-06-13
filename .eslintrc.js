@@ -9,20 +9,20 @@ module.exports = {
 			jsx: true,
 		},
 		ecmaVersion: 2020,
-		sourceType: 'module',
+		sourceType: "module",
 	},
-	plugins: ['react', 'unused-imports'],
+	plugins: ["react", "unused-imports"],
 	rules: {
-		'react/jsx-uses-vars': 'error',
-		'react/jsx-uses-react': 'error',
-		'space-before-function-paren': [
-			'error',
+		"react/jsx-uses-vars": "error",
+		"react/jsx-uses-react": "error",
+		"space-before-function-paren": [
+			"error",
 			{
-				anonymous: 'ignore',
-				named: 'never',
-				asyncArrow: 'always',
+				anonymous: "ignore",
+				named: "never",
+				asyncArrow: "always",
 			},
 		],
-		'unused-imports/no-unused-imports-ts': ['error'],
+		"unused-imports/no-unused-imports-ts": ["error"],
 	},
-}
+};
