@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import IssueApi from "apis/issue";
-
 const initialState = {
 	issues: [],
 	getIssueState: {
@@ -36,6 +35,7 @@ export const issueSlice = createSlice({
 export const getIssue = createAsyncThunk(
 	"issue/getIssue",
 	async ({ owner, repo, page, limit }) => {
+		console.log("owner", owner, "repo", repo, "page", page, "limit", limit);
 		const res = await IssueApi.getIssue(owner, repo, page, limit);
 		console.log("res값: ", res);
 		return res.data;
