@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { Shadow } from "styles/common";
 import { useNavigate } from "react-router-dom";
+
 const FilterBox = () => {
 	const navigate = useNavigate();
 	let url = new URL(window.location.href);
 	const params = new URLSearchParams(url.search);
+	let urlPage = url.searchParams.get("currentPage") || 1;
+	let urlPerPage = url.searchParams.get("perPage") || 10;
+	let urlSort = url.searchParams.get("sort") || "updated_at";
 
 	//클릭한 옵션으로 콘텐츠 정렬
 	const onChangeSortOption = e => {
@@ -29,14 +33,26 @@ const FilterBox = () => {
 		<S.Box>
 			<S.Wrapper>
 				<S.SelectBox onChange={onChangeSortOption}>
-					<option value="updated_at">업데이트순</option>
-					<option value="created_at">최신순</option>
-					<option value="comments">댓글순</option>
+					<option value="updated_at" selected={urlSort === "updated_at"}>
+						업데이트순
+					</option>
+					<option value="created_at" selected={urlSort === "created_at"}>
+						최신순
+					</option>
+					<option value="comments" selected={urlSort === "comments"}>
+						댓글순
+					</option>
 				</S.SelectBox>
 				<S.SelectBox onChange={onChangePerPageOption}>
-					<option value="10">10개씩</option>
-					<option value="20">20개씩</option>
-					<option value="50">50개씩</option>
+					<option value="10" selected={urlPerPage === "10"}>
+						10개씩
+					</option>
+					<option value="20" selected={urlPerPage === "20"}>
+						20개씩
+					</option>
+					<option value="50" selected={urlPerPage === "50"}>
+						50개씩
+					</option>
 				</S.SelectBox>
 			</S.Wrapper>
 		</S.Box>

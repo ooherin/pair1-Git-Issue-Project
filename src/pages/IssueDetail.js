@@ -31,25 +31,6 @@ const IssueDetail = () => {
 		getOneIssueDate();
 	}, [issueId, dispatch]);
 
-	// const [oneIssue, setOneIssue] = useState(null);
-	// const { issueId } = useParams();
-	// useEffect(() => {
-	// 	const getOneIssue = async () => {
-	// 		try {
-	// 			const res = await axioseInstance.get(
-	// 				`/repos/angular/angular-cli/issues/${issueId}`,
-	// 			);
-	// 			setOneIssue(res.data);
-	// 		} catch (err) {
-	// 			console.error(err);
-	// 		}
-	// 	};
-	// 	getOneIssue();
-	// }, []);
-
-	console.log("test", oneIssue.user);
-	// console.log("test", oneIssue.user.avatar_url);
-
 	if (loading) return <Loading />;
 	return (
 		<S.Box>

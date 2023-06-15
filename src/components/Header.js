@@ -2,7 +2,14 @@ import styled from "styled-components";
 import { flexCenter } from "styles/common";
 
 const Header = () => {
-	return <S.IssueHeader>Github API를 활용한 Issue 조회하기</S.IssueHeader>;
+	return (
+		<>
+			<S.IssueHeader>
+				<S.Logo src="/image/logo3.png" />
+				<Title>Github API를 활용한 Issue 조회하기</Title>
+			</S.IssueHeader>
+		</>
+	);
 };
 
 export default Header;
@@ -25,6 +32,17 @@ const IssueHeader = styled.div`
 	}
 `;
 
+const Logo = styled.img`
+	width: 30px;
+	filter: invert(100%);
+`;
+
+const Title = styled.div`
+	padding-left: 20px;
+`;
+
 const S = {
 	IssueHeader,
+	Logo,
+	Title,
 };

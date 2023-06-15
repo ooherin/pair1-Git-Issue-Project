@@ -11,8 +11,9 @@ const Pagination = () => {
 	//현재페이지는 1
 	//파라미터의 currentPage 가져오는 법
 	const url = new URL(window.location.href);
-	let urlPage = url.searchParams.get("currentPage");
-	let urlPerPage = url.searchParams.get("perPage");
+	let urlPage = url.searchParams.get("currentPage") || 1;
+	let urlPerPage = url.searchParams.get("perPage") || 10;
+	let urlSort = url.searchParams.get("sort") || "updated_at";
 	const params = new URLSearchParams(url.search);
 	const [currentPage, setCurrentPage] = useState(urlPage);
 
@@ -52,15 +53,16 @@ const Pagination = () => {
 
 	//맨 앞으로 이동(맨처음)
 	const onMoveFirstPage = () => {
-		navigate(`/main?currentPage=1&sort=updated&perPage=10`);
+		navigate(`/main?currentPage=1&sort=${urlSort}&perPage=${urlPerPage}`);
 		// getIssueData(1);
 		setCurrentPageGroup(1);
 	};
 
 	//맨 뒤로 이동(맨뒤)
 	const onMoveLastPage = () => {
-		navigate(`/main?currentPage=${lastPage}&sort=updated&perPage=10`);
-		// getIssueData(lastPage);
+		navigate(
+			`/main?currentPage=${lastPage}&sort=${urlSort}&perPage=${urlPerPage}`,
+		);
 		setCurrentPageGroup(lastPageGroup);
 	};
 
