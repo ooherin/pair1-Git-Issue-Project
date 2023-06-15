@@ -1,19 +1,45 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getIssue } from "reducer/issue";
 import OneIssue from "./OneIssue";
 import FilterBox from "components/FilterBox";
 import { useNavigate } from "react-router-dom";
 import Loading from "components/Loading";
 import Pagination from "components/Pagination";
+import { getIssue } from "reducer/issue";
 
 const Issue = () => {
 	const dispatch = useDispatch();
-	let issueList = useSelector(state => state.issue.issues);
+	const issueList = useSelector(state => state.issue.issues);
 	const { loading } = useSelector(state => state.issue.getIssueState);
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(10);
 	const navigate = useNavigate();
+
+	const url = new URL(window.location.href);
+	const urlPage = url.searchParams.get("currentPage") || 1;
+
+	//의존성 배열에 url이 아니라 urlPage를 넣어주어야 함
+	//url을 넣어주면 url은 useEffect내에서 바뀌지 않으므로 무한 렌더링 발생
+	useEffect(() => {
+		const res = getIssueData(urlPage);
+		console.log(res);
+	}, [urlPage]);
+
+	const getIssueData = async page => {
+		try {
+			const res = await dispatch(
+				getIssue({
+					owner: "angular",
+					repo: "angular-cli",
+					page,
+					limit: 10,
+				}),
+			);
+			console.log("getIssueData", res);
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	console.log("issueList", issueList);
 	console.log("loading", loading); // 로딩 상태 확인
@@ -22,29 +48,6 @@ const Issue = () => {
 	const onNavigateDetailPage = issueId => {
 		navigate(`/${issueId}`);
 	};
-
-	useEffect(() => {
-		if (issueList.length > 0) {
-			return;
-		}
-		const getIssueData = async () => {
-			try {
-				const res = await dispatch(
-					getIssue({
-						owner: "angular",
-						repo: "angular-cli",
-						page: 1,
-						limit: 10,
-					}),
-				);
-				console.log("getIssueData", res);
-			} catch (err) {
-				console.error(err);
-			}
-		};
-		issueList = getIssueData();
-		console.log("issueList", issueList);
-	}, []);
 
 	if (loading) return <Loading />;
 	return (

@@ -10,26 +10,27 @@ const Pagination = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	//현재페이지는 1
-	const [currentPage, setCurrentPage] = useState(null);
-
 	//파라미터의 currentPage 가져오는 법
+	const url = new URL(window.location.href);
+	let urlPage = url.searchParams.get("currentPage");
+	const [currentPage, setCurrentPage] = useState(urlPage);
+
 	//렌더링 될떄마다 currentPage의 값을 변경시켜줌
 	//처음에 url에 currentPage라는 쿼리스트링이 없다면 1로 currentPage를 설정함.
-	const url = new URL(window.location.href);
 	useEffect(() => {
-		let urlPage = url.searchParams.get("currentPage");
 		if (!urlPage) {
 			return setCurrentPage(1);
 		}
 		setCurrentPage(urlPage);
-		console.log("currentPage", currentPage);
 	}, [url]);
+	//한페이지의 콘텐츠 개수
+	const [limit, setLimit] = useState(10);
 
 	// const [currentPage, setCurrentPage] = useState(1);
 	//현재페이지 그룹 : 1~10버튼 => 1(그룹) / 11~20 => 2(그룹)
-	const [currentPageGroup, setCurrentPageGroup] = useState(1);
-	//한페이지의 콘텐츠 개수
-	const [limit, setLimit] = useState(10);
+	const [currentPageGroup, setCurrentPageGroup] = useState(
+		Math.ceil(urlPage / limit),
+	);
 	const PagePerGroup = 10;
 	const totalIssueCount = 200;
 	const lastPageGroup = Math.ceil(totalIssueCount / limit / PagePerGroup);
@@ -54,14 +55,14 @@ const Pagination = () => {
 	//맨 앞으로 이동(맨처음)
 	const onMoveFirstPage = () => {
 		navigate(`/main?currentPage=1`);
-		getIssueData(1);
+		// getIssueData(1);
 		setCurrentPageGroup(1);
 	};
 
 	//맨 뒤로 이동(맨뒤)
 	const onMoveLastPage = () => {
 		navigate(`/main?currentPage=${lastPage}`);
-		getIssueData(lastPage);
+		// getIssueData(lastPage);
 		setCurrentPageGroup(lastPageGroup);
 	};
 
@@ -80,7 +81,7 @@ const Pagination = () => {
 	const onMovePage = e => {
 		// setCurrentPage(e.target.innerText);
 		navigate(`/main?currentPage=${e.target.innerText}`);
-		getIssueData(e.target.innerText);
+		// getIssueData(e.target.innerText);
 	};
 
 	return (
@@ -91,7 +92,6 @@ const Pagination = () => {
 				.fill()
 				.map((_, index) => {
 					const pageNumber = (currentPageGroup - 1) * 10 + index + 1;
-					console.log("pageNumber", pageNumber);
 					return (
 						<Button
 							onClick={onMovePage}
