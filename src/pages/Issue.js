@@ -1,35 +1,45 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getIssue } from "reducer/issue";
+import { useSelector } from "react-redux";
 import OneIssue from "./OneLissue";
 import FilterBox from "components/FilterBox";
-
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getIssue } from "reducer/issue";
 const Issue = () => {
 	const dispatch = useDispatch();
-	const issueList = useSelector(state => state.issue.issues);
-	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(10);
-
+	let issueList = useSelector(state => state.issue.issues);
+	//첫페이지에서 렌더링이 안될때
 	useEffect(() => {
+		if (issueList.length > 0) {
+			return;
+		}
 		const getIssueData = async () => {
 			try {
-				dispatch(
-					getIssue({ owner: "angular", repo: "angular-cli", page, limit }),
+				const res = await dispatch(
+					getIssue({
+						owner: "angular",
+						repo: "angular-cli",
+						page: 1,
+						limit: 10,
+					}),
 				);
+				console.log("getIssueData", res);
 			} catch (err) {
 				console.error(err);
 			}
 		};
-		getIssueData();
+		issueList = getIssueData();
+		console.log("issueList", issueList);
 	}, []);
 
 	return (
-		<div>
-			<FilterBox />
-			{issueList.map(issue => (
-				<OneIssue issue={issue} />
-			))}
-		</div>
+		issueList.length > 0 && (
+			<div>
+				<FilterBox />
+				{issueList.map(issue => (
+					<OneIssue key={Math.floor(Math.random() * 10000)} issue={issue} />
+				))}
+			</div>
+		)
 	);
 };
 
