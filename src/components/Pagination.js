@@ -23,13 +23,15 @@ const Pagination = () => {
 		}
 		setCurrentPage(urlPage);
 	}, [url]);
+
 	//한페이지의 콘텐츠 개수
+	//필터
 	const [limit, setLimit] = useState(10);
 
 	// const [currentPage, setCurrentPage] = useState(1);
 	//현재페이지 그룹 : 1~10버튼 => 1(그룹) / 11~20 => 2(그룹)
 	const [currentPageGroup, setCurrentPageGroup] = useState(
-		Math.ceil(urlPage / limit),
+		urlPage ? Math.ceil(urlPage / 10) : 1,
 	);
 	const PagePerGroup = 10;
 	const totalIssueCount = 200;
