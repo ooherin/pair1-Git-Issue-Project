@@ -17,7 +17,8 @@ const OneIssue = ({ issue, onNavigate }) => {
 					</div>
 					<div>
 						<S.Content>{issue.body}</S.Content>
-						<p>{updatedAt}</p>
+						<p>업데이트 날짜: {updatedAt}</p>
+						<p>최신 순: {issue.created_at}</p>
 					</div>
 				</S.Container>
 			</S.Wrapper>
@@ -87,7 +88,7 @@ const Comment = styled.p`
 `;
 
 const Content = styled.p`
-	width: 80%;
+	width: 50%;
 	${omitText}
 
 	@media ${({ theme }) => theme.DEVICE.mobile} {

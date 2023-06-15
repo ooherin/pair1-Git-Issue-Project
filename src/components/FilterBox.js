@@ -29,8 +29,8 @@ const FilterBox = () => {
 		<S.Box>
 			<S.Wrapper>
 				<S.SelectBox onChange={onChangeSortOption}>
-					<option value="updated">업데이트순</option>
-					<option value="current">최신순</option>
+					<option value="updated_at">업데이트순</option>
+					<option value="created_at">최신순</option>
 					<option value="comments">댓글순</option>
 				</S.SelectBox>
 				<S.SelectBox onChange={onChangePerPageOption}>

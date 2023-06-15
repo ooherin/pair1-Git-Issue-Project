@@ -21,7 +21,11 @@ const Issue = () => {
 	//의존성 배열에 url이 아니라 urlPage를 넣어주어야 함
 	//url을 넣어주면 url은 useEffect내에서 바뀌지 않으므로 무한 렌더링 발생
 	useEffect(() => {
-		const res = getIssueData(urlPage, urlPerPage);
+		if (issueList.length === 0) {
+			getIssueData(1, 10);
+		} else {
+			getIssueData(urlPage, urlPerPage, urlSort);
+		}
 	}, [urlPage, urlSort, urlPerPage]);
 
 	const getIssueData = async (page, perPage) => {
@@ -32,6 +36,7 @@ const Issue = () => {
 					repo: "angular-cli",
 					page: page,
 					limit: perPage,
+					filter: urlSort,
 				}),
 			);
 			console.log("getIssueData", res);
