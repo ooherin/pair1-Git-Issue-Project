@@ -66,6 +66,7 @@ const Container = styled.div`
 const Title = styled.p`
 	${omitText}
 	padding: 0 20px;
+	font-weight: 700;
 
 	@media ${({ theme }) => theme.DEVICE.pc} {
 		text-align: center;
