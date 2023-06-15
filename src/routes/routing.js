@@ -11,7 +11,7 @@ const router = createBrowserRouter([
 				element: <Issue />,
 				children: [
 					{
-						path: "mainPage",
+						path: "main",
 						elememt: <Issue />,
 					},
 				],
