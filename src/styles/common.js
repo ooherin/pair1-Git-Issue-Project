@@ -7,6 +7,11 @@ export const flexCenter = css`
 	align-items: center;
 `;
 
+export const flexColumn = css`
+	display: flex;
+	flex-direction: column;
+`;
+
 export const omitText = css`
 	overflow: hidden;
 	word-break: break-all;
