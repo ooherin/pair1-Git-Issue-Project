@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getIssue } from "reducer/issue";
 import theme from "styles/theme";
 
 //페이지네이션
@@ -13,6 +12,8 @@ const Pagination = () => {
 	//파라미터의 currentPage 가져오는 법
 	const url = new URL(window.location.href);
 	let urlPage = url.searchParams.get("currentPage");
+	let urlPerPage = url.searchParams.get("perPage");
+	const params = new URLSearchParams(url.search);
 	const [currentPage, setCurrentPage] = useState(urlPage);
 
 	//렌더링 될떄마다 currentPage의 값을 변경시켜줌
@@ -24,19 +25,14 @@ const Pagination = () => {
 		setCurrentPage(urlPage);
 	}, [url]);
 
-	//한페이지의 콘텐츠 개수
-	//필터
-	const [limit, setLimit] = useState(10);
-
-	// const [currentPage, setCurrentPage] = useState(1);
 	//현재페이지 그룹 : 1~10버튼 => 1(그룹) / 11~20 => 2(그룹)
 	const [currentPageGroup, setCurrentPageGroup] = useState(
 		urlPage ? Math.ceil(urlPage / 10) : 1,
 	);
 	const PagePerGroup = 10;
 	const totalIssueCount = 200;
-	const lastPageGroup = Math.ceil(totalIssueCount / limit / PagePerGroup);
-	const lastPage = Math.ceil(totalIssueCount / limit);
+	const lastPageGroup = Math.ceil(totalIssueCount / urlPerPage / PagePerGroup);
+	const lastPage = Math.ceil(totalIssueCount / urlPerPage);
 
 	//이전 버튼 그룹으로 이동(<)
 	const onMovePrevGroup = () => {
@@ -56,34 +52,24 @@ const Pagination = () => {
 
 	//맨 앞으로 이동(맨처음)
 	const onMoveFirstPage = () => {
-		navigate(`/main?currentPage=1`);
+		navigate(`/main?currentPage=1&sort=updated&perPage=10`);
 		// getIssueData(1);
 		setCurrentPageGroup(1);
 	};
 
 	//맨 뒤로 이동(맨뒤)
 	const onMoveLastPage = () => {
-		navigate(`/main?currentPage=${lastPage}`);
+		navigate(`/main?currentPage=${lastPage}&sort=updated&perPage=10`);
 		// getIssueData(lastPage);
 		setCurrentPageGroup(lastPageGroup);
 	};
 
-	//해당 페이지의 issue데이터 요청
-	const getIssueData = async page => {
-		try {
-			return dispatch(
-				getIssue({ owner: "angular", repo: "angular-cli", page, limit }),
-			);
-		} catch (err) {
-			console.error(err);
-		}
-	};
-
-	//해당 페이지로 url 이동후 getIssueData함수로 데이터 요청
+	//해당 페이지로 url 이동
 	const onMovePage = e => {
-		// setCurrentPage(e.target.innerText);
-		navigate(`/main?currentPage=${e.target.innerText}`);
-		// getIssueData(e.target.innerText);
+		const movePage = Number(e.target.innerText);
+		params.set("currentPage", movePage);
+		url.search = params.toString();
+		navigate(`/main${url.search}`);
 	};
 
 	return (

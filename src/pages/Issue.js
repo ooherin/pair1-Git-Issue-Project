@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OneIssue from "./OneIssue";
 import FilterBox from "components/FilterBox";
@@ -11,28 +11,27 @@ const Issue = () => {
 	const dispatch = useDispatch();
 	const issueList = useSelector(state => state.issue.issues);
 	const { loading } = useSelector(state => state.issue.getIssueState);
-	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(10);
 	const navigate = useNavigate();
 
 	const url = new URL(window.location.href);
 	const urlPage = url.searchParams.get("currentPage") || 1;
+	const urlSort = url.searchParams.get("sort") || 10;
+	const urlPerPage = url.searchParams.get("perPage") || "updated";
 
 	//의존성 배열에 url이 아니라 urlPage를 넣어주어야 함
 	//url을 넣어주면 url은 useEffect내에서 바뀌지 않으므로 무한 렌더링 발생
 	useEffect(() => {
-		const res = getIssueData(urlPage);
-		console.log(res);
-	}, [urlPage]);
+		const res = getIssueData(urlPage, urlPerPage);
+	}, [urlPage, urlSort, urlPerPage]);
 
-	const getIssueData = async page => {
+	const getIssueData = async (page, perPage) => {
 		try {
 			const res = await dispatch(
 				getIssue({
 					owner: "angular",
 					repo: "angular-cli",
-					page,
-					limit: 10,
+					page: page,
+					limit: perPage,
 				}),
 			);
 			console.log("getIssueData", res);
