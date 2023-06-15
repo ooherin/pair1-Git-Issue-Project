@@ -1,5 +1,6 @@
 import Loading from "components/Loading";
 import { useEffect } from "react";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getOneIssue } from "reducer/issue";
@@ -43,7 +44,9 @@ const IssueDetail = () => {
 					<S.Avatar src={oneIssue.user?.avatar_url} />
 					<span>{oneIssue.user?.login}</span>
 				</S.AvatarBox>
-				<S.Body>{oneIssue.body}</S.Body>
+				<S.Body>
+					<ReactMarkdown children={oneIssue.body} />
+				</S.Body>
 			</S.Wrapper>
 		</S.Box>
 	);
@@ -51,7 +54,7 @@ const IssueDetail = () => {
 export default IssueDetail;
 
 const Box = styled.div`
-	margin: 0 10px;
+	margin: 0px 10px 50px 10px;
 `;
 
 const Wrapper = styled.div`
@@ -67,6 +70,10 @@ const Wrapper = styled.div`
 
 	:hover {
 		transform: translateY(-5px);
+	}
+
+	p {
+		width: 100%;
 	}
 `;
 
@@ -104,6 +111,21 @@ const Avatar = styled.img`
 
 const Body = styled.p`
 	word-break: break-all;
+	line-height: 1.25rem;
+	h2 {
+		margin: 20px 0;
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	p {
+		padding: 10px 0;
+		width: 100%;
+	}
+
+	ul {
+		margin: 20px 0;
+	}
 `;
 
 const S = {

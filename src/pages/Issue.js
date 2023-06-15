@@ -15,8 +15,8 @@ const Issue = () => {
 
 	const url = new URL(window.location.href);
 	const urlPage = url.searchParams.get("currentPage") || 1;
-	const urlSort = url.searchParams.get("sort") || 10;
-	const urlPerPage = url.searchParams.get("perPage") || "updated";
+	const urlSort = url.searchParams.get("sort") || "updated_at";
+	const urlPerPage = url.searchParams.get("perPage") || 10;
 
 	//의존성 배열에 url이 아니라 urlPage를 넣어주어야 함
 	//url을 넣어주면 url은 useEffect내에서 바뀌지 않으므로 무한 렌더링 발생
