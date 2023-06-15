@@ -1,13 +1,28 @@
-import { useSelector } from "react-redux";
-import OneIssue from "./OneLissue";
-import FilterBox from "components/FilterBox";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getIssue } from "reducer/issue";
+import OneIssue from "./OneIssue";
+import FilterBox from "components/FilterBox";
+import { useNavigate } from "react-router-dom";
+import Loading from "components/Loading";
+import Pagination from "components/Pagination";
+
 const Issue = () => {
 	const dispatch = useDispatch();
 	let issueList = useSelector(state => state.issue.issues);
-	//첫페이지에서 렌더링이 안될때
+	const { loading } = useSelector(state => state.issue.getIssueState);
+	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(10);
+	const navigate = useNavigate();
+
+	console.log("issueList", issueList);
+	console.log("loading", loading); // 로딩 상태 확인
+
+	// 각 issue 상세페이지 연결
+	const onNavigateDetailPage = issueId => {
+		navigate(`/${issueId}`);
+	};
+
 	useEffect(() => {
 		if (issueList.length > 0) {
 			return;
@@ -31,15 +46,21 @@ const Issue = () => {
 		console.log("issueList", issueList);
 	}, []);
 
+	if (loading) return <Loading />;
 	return (
-		issueList.length > 0 && (
-			<div>
-				<FilterBox />
-				{issueList.map(issue => (
-					<OneIssue key={Math.floor(Math.random() * 10000)} issue={issue} />
-				))}
-			</div>
-		)
+		<div>
+			<FilterBox />
+			{issueList.map(issue => (
+				<>
+					<OneIssue
+						issue={issue}
+						key={Math.floor(Math.random() * 10000)}
+						onNavigate={() => onNavigateDetailPage(issue.number)}
+					/>
+				</>
+			))}
+			<Pagination />
+		</div>
 	);
 };
 

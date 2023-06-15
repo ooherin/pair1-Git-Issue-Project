@@ -2,19 +2,22 @@ import styled from "styled-components";
 import { Shadow, omitText } from "styles/common";
 
 // OneIssue
-const OneIssue = ({ issue }) => {
+const OneIssue = ({ issue, onNavigate }) => {
+	const updatedAt = new Intl.DateTimeFormat().format(
+		new Date(issue.updated_at),
+	);
 	return (
 		<S.Box>
-			<S.Wrapper>
+			<S.Wrapper onClick={onNavigate}>
 				<S.Container>
 					<div>
 						<p>{issue.number}</p>
-						<S.title>{issue.title}</S.title>
+						<S.Title>{issue.title}</S.Title>
 						<S.Comment>comments : {issue.comments}</S.Comment>
 					</div>
 					<div>
 						<S.Content>{issue.body}</S.Content>
-						<p>{issue.user.login}</p>
+						<p>{updatedAt}</p>
 					</div>
 				</S.Container>
 			</S.Wrapper>
@@ -59,10 +62,14 @@ const Container = styled.div`
 		margin-bottom: 30px;
 	}
 `;
-const title = styled.p`
+const Title = styled.p`
 	${omitText}
 	padding: 0 20px;
 
+	@media ${({ theme }) => theme.DEVICE.pc} {
+		text-align: center;
+		width: 75%;
+	}
 	@media ${({ theme }) => theme.DEVICE.tablet} {
 		padding: 0 50px;
 		width: 70%;
@@ -82,13 +89,17 @@ const Comment = styled.p`
 const Content = styled.p`
 	width: 80%;
 	${omitText}
+
+	@media ${({ theme }) => theme.DEVICE.mobile} {
+		width: 70%;
+	}
 `;
 
 const S = {
 	Box,
 	Wrapper,
 	Container,
-	title,
+	Title,
 	Comment,
 	Content,
 };

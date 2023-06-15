@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
-import Pagination from "./Pagination";
 import TopButton from "./TopBotton";
 const Layout = () => {
 	return (
@@ -8,7 +7,6 @@ const Layout = () => {
 			<Header />
 			<TopButton />
 			<Outlet />
-			<Pagination />
 		</>
 	);
 };
