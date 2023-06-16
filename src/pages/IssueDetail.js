@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { Shadow, flexColumn } from "styles/common";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import Comment from "./Comment";
 
 const IssueDetail = () => {
 	const dispatch = useDispatch();
@@ -37,36 +38,44 @@ const IssueDetail = () => {
 
 	if (loading) return <Loading />;
 	return (
-		<S.Box>
-			<S.Wrapper>
-				<S.Container>
-					<p>#{oneIssue.number}</p>
-					<p>{oneIssue.title}</p>
-					<S.LabelsWrapper>
-						{oneIssue.labels && oneIssue.labels.length !== 0 && (
-							<S.LabelsContainer>
-								{oneIssue.labels.map((label, idx) => (
-									<S.Labels key={idx} color={label.color}>
-										{label.name}
-									</S.Labels>
-								))}
-							</S.LabelsContainer>
-						)}
-					</S.LabelsWrapper>
-				</S.Container>
-				<S.AvatarBox>
-					<S.Avatar src={oneIssue.user?.avatar_url} />
-					<span>{oneIssue.user?.login}</span>
-				</S.AvatarBox>
-				<S.Body>
-					<ReactMarkdown
-						children={oneIssue.body}
-						remarkPlugins={[remarkGfm]}
-						rehypePlugins={[rehypeRaw]}
-					/>
-				</S.Body>
-			</S.Wrapper>
-		</S.Box>
+		<>
+			<S.Box>
+				<S.Wrapper>
+					<S.Container>
+						<p>#{oneIssue.number}</p>
+						<p>{oneIssue.title}</p>
+						<S.LabelsWrapper>
+							{oneIssue.labels && oneIssue.labels.length !== 0 && (
+								<S.LabelsContainer>
+									{oneIssue.labels.map((label, idx) => (
+										<S.Labels key={idx} color={label.color}>
+											{label.name}
+										</S.Labels>
+									))}
+								</S.LabelsContainer>
+							)}
+						</S.LabelsWrapper>
+					</S.Container>
+					<S.AvatarBox>
+						<S.Avatar src={oneIssue.user?.avatar_url} />
+						<span>{oneIssue.user?.login}</span>
+					</S.AvatarBox>
+					<S.Body>
+						<ReactMarkdown
+							children={oneIssue.body}
+							remarkPlugins={[remarkGfm]}
+							rehypePlugins={[rehypeRaw]}
+						/>
+					</S.Body>
+				</S.Wrapper>
+			</S.Box>
+			{/*댓글 컴포넌트*/}
+			{oneIssue.comments > 0 ? (
+				<Comment issueId={issueId} />
+			) : (
+				<S.Wrapper>댓글이 없습니다.</S.Wrapper>
+			)}
+		</>
 	);
 };
 export default IssueDetail;
@@ -102,7 +111,6 @@ const Container = styled.div`
 	border-bottom: 5px solid #ebebeb;
 	margin-bottom: 30px;
 	text-align: center;
-
 	p:first-of-type {
 		font-size: 20px;
 		font-weight: bold;
@@ -140,7 +148,6 @@ const Body = styled.p`
 		font-size: 18px;
 		font-weight: bold;
 	}
-
 	p {
 		padding: 10px 0;
 		width: 100%;

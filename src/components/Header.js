@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { flexCenter } from "styles/common";
 
 const Header = () => {
+	const navigate = useNavigate();
+
+	const onMoveMainPage = () => {
+		navigate("/");
+	};
 	return (
 		<>
-			<S.IssueHeader>
+			<S.IssueHeader onClick={onMoveMainPage}>
 				<S.Logo src="/image/logo3.png" />
 				<S.Title>Github API를 활용한 Issue 조회하기</S.Title>
 			</S.IssueHeader>
@@ -22,6 +28,7 @@ const IssueHeader = styled.div`
 	font-weight: bold;
 	${flexCenter}
 	margin-bottom: 60px;
+	cursor: pointer;
 
 	@media ${({ theme }) => theme.DEVICE.pc} {
 		max-width: 1024px;

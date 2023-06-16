@@ -30,6 +30,9 @@ ${reset}
     display: block;
     width: 100%;
   }
+  img {
+			width: 100%;
+		}
 `;
 
 export default GlobalStyles;

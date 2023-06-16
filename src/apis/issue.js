@@ -12,6 +12,11 @@ const IssueApi = {
 	getOneIssue(owner, repo, issueId) {
 		return axioseInstance.get(`/repos/${owner}/${repo}/issues/${issueId}`);
 	},
+	getComment({ owner, repo, issueId }) {
+		return axioseInstance.get(
+			`/repos/${owner}/${repo}/issues/${issueId}/comments`,
+		);
+	},
 };
 
 export default IssueApi;

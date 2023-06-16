@@ -4,10 +4,9 @@ const Loading = () => {
 	return (
 		<S.Container>
 			<S.Text>로딩중입니다 :)</S.Text>
-			<img
+			<S.Img
 				src={`${process.env.PUBLIC_URL}/spinner.gif`}
 				alt="로딩중 UI icon"
-				width="16%"
 			/>
 		</S.Container>
 	);
@@ -28,6 +27,9 @@ const Container = styled.div`
 	justify-content: center;
 `;
 
+const Img = styled.img`
+	width: 16%;
+`;
 const Text = styled.div`
 	font-size: 20px;
 	font-weight: bold;
@@ -41,4 +43,5 @@ const Text = styled.div`
 const S = {
 	Container,
 	Text,
+	Img,
 };

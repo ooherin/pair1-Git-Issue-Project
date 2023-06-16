@@ -44,7 +44,7 @@ const OneIssue = ({ issue, onNavigate }) => {
 						</p>
 						<p>
 							<GoIssueOpened size={16} />
-							opend on {createdAt}
+							opened on {createdAt}
 						</p>
 					</S.Days>
 				</S.Container>
