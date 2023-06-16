@@ -36,6 +36,10 @@ const Wrapper = styled.div`
 		color: white;
 		background-image: linear-gradient(to right, #ff0000, #0000ff);
 	}
+	@media ${({ theme }) => theme.DEVICE.mobile} {
+		right: 20px;
+		bottom: 110px;
+	}
 `;
 
 const Flex = styled.div`

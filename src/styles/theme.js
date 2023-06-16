@@ -13,7 +13,8 @@ const DEVICE = {
 const PALETTE = {
 	fontColor: {
 		white: "#ffffff",
-		dark: "24292f",
+		dark: "#24292f",
+		grey: "#888",
 	},
 	background: "#24292f",
 };

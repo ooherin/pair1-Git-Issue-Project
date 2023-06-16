@@ -6,6 +6,8 @@ import { useParams } from "react-router";
 import { getOneIssue } from "reducer/issue";
 import styled from "styled-components";
 import { Shadow, flexColumn } from "styles/common";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 const IssueDetail = () => {
 	const dispatch = useDispatch();
@@ -14,6 +16,7 @@ const IssueDetail = () => {
 	const { issueId } = useParams();
 
 	console.log("oneIssue", oneIssue);
+	console.log("oneIssue labels", oneIssue.labels);
 
 	useEffect(() => {
 		const getOneIssueDate = async () => {
@@ -39,13 +42,28 @@ const IssueDetail = () => {
 				<S.Container>
 					<p>#{oneIssue.number}</p>
 					<p>{oneIssue.title}</p>
+					<S.LabelsWrapper>
+						{oneIssue.labels && oneIssue.labels.length !== 0 && (
+							<S.LabelsContainer>
+								{oneIssue.labels.map((label, idx) => (
+									<S.Labels key={idx} color={label.color}>
+										{label.name}
+									</S.Labels>
+								))}
+							</S.LabelsContainer>
+						)}
+					</S.LabelsWrapper>
 				</S.Container>
 				<S.AvatarBox>
 					<S.Avatar src={oneIssue.user?.avatar_url} />
 					<span>{oneIssue.user?.login}</span>
 				</S.AvatarBox>
 				<S.Body>
-					<ReactMarkdown children={oneIssue.body} />
+					<ReactMarkdown
+						children={oneIssue.body}
+						remarkPlugins={[remarkGfm]}
+						rehypePlugins={[rehypeRaw]}
+					/>
 				</S.Body>
 			</S.Wrapper>
 		</S.Box>
@@ -74,6 +92,7 @@ const Wrapper = styled.div`
 
 	p {
 		width: 100%;
+		margin-bottom: 20px;
 	}
 `;
 
@@ -92,6 +111,10 @@ const Container = styled.div`
 
 	p {
 		font-size: 18px;
+	}
+
+	@media ${({ theme }) => theme.DEVICE.tablet} {
+		padding-bottom: 25px;
 	}
 `;
 
@@ -128,6 +151,44 @@ const Body = styled.p`
 	}
 `;
 
+const LabelsWrapper = styled.div`
+	display: flex;
+	justify-content: center;
+`;
+
+const LabelsContainer = styled.div`
+	display: flex;
+	justify-content: center;
+
+	@media ${({ theme }) => theme.DEVICE.tablet} {
+		flex-direction: column;
+		align-items: center;
+	}
+`;
+
+const Labels = styled.span`
+	border-radius: 20px;
+	padding: 2px 10px 4px;
+	margin-right: 6px;
+	background: ${props => `#${props.color}`};
+	color: ${({ color, theme }) =>
+		color === "5319e7" ||
+		color === "B0279B" ||
+		color === "7028c1" ||
+		color === "0e8a16" ||
+		color === "b60205" ||
+		color === "0052cc" ||
+		color === "006b75"
+			? theme.PALETTE.fontColor.white
+			: theme.PALETTE.fontColor.dark};
+	font-size: 14px;
+	font-weight: 600;
+
+	@media ${({ theme }) => theme.DEVICE.tablet} {
+		margin-bottom: 10px;
+	}
+`;
+
 const S = {
 	Box,
 	Wrapper,
@@ -135,4 +196,7 @@ const S = {
 	AvatarBox,
 	Avatar,
 	Body,
+	LabelsWrapper,
+	LabelsContainer,
+	Labels,
 };

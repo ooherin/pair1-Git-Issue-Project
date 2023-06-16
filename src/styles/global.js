@@ -21,6 +21,15 @@ ${reset}
   ul, li {
     list-style: none;
   }
+
+  pre {
+    width: 500px;
+  }
+
+  code {
+    display: block;
+    width: 100%;
+  }
 `;
 
 export default GlobalStyles;

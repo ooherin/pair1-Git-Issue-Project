@@ -57,37 +57,39 @@ const Pagination = () => {
 
 	return (
 		<S.Wrapper>
-			<S.TextButton
-				onClick={() => {
-					onMoveEndPage(1);
-				}}
-			>
-				맨처음
-			</S.TextButton>
-			<S.ArrowButton onClick={onMovePrevGroup}>{"<"}</S.ArrowButton>
-			{Array(10)
-				.fill()
-				.map((_, index) => {
-					const pageNumber = (currentPageGroup - 1) * 10 + index + 1;
-					return (
-						<S.Button
-							onClick={onMovePage}
-							key={Math.floor(Math.random() * 100000)}
-							pageNumber={pageNumber}
-							currentPage={currentPage}
-						>
-							{pageNumber}
-						</S.Button>
-					);
-				})}
-			<S.ArrowButton onClick={onMoveNextGroup}>{">"}</S.ArrowButton>
-			<S.TextButton
-				onClick={() => {
-					onMoveEndPage(lastPage);
-				}}
-			>
-				맨끝
-			</S.TextButton>
+			<S.Container>
+				<S.TextButton
+					onClick={() => {
+						onMoveEndPage(1);
+					}}
+				>
+					맨처음
+				</S.TextButton>
+				<S.ArrowButton onClick={onMovePrevGroup}>{"<"}</S.ArrowButton>
+				{Array(10)
+					.fill()
+					.map((_, index) => {
+						const pageNumber = (currentPageGroup - 1) * 10 + index + 1;
+						return (
+							<S.Button
+								onClick={onMovePage}
+								key={Math.floor(Math.random() * 100000)}
+								pageNumber={pageNumber}
+								currentPage={currentPage}
+							>
+								{pageNumber}
+							</S.Button>
+						);
+					})}
+				<S.ArrowButton onClick={onMoveNextGroup}>{">"}</S.ArrowButton>
+				<S.TextButton
+					onClick={() => {
+						onMoveEndPage(lastPage);
+					}}
+				>
+					맨끝
+				</S.TextButton>
+			</S.Container>
 		</S.Wrapper>
 	);
 };
@@ -102,6 +104,22 @@ const Wrapper = styled.div`
 	align-items: center;
 	button {
 		margin: 4px;
+	}
+	margin: 0 auto;
+
+	@media ${({ theme }) => theme.DEVICE.mobile} {
+		padding: 0;
+	}
+`;
+
+const Container = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	@media ${({ theme }) => theme.DEVICE.mobile} {
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 `;
 
@@ -135,6 +153,7 @@ const TextButton = styled.button`
 
 const S = {
 	Wrapper,
+	Container,
 	Button,
 	ArrowButton,
 	TextButton,
