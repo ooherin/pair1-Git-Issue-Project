@@ -59,8 +59,8 @@ export const issueSlice = createSlice({
 
 export const getIssue = createAsyncThunk(
 	"issue/getIssue",
-	async ({ owner, repo, page, limit, filter }) => {
-		const res = await IssueApi.getIssue(owner, repo, page, limit, filter);
+	async ({ owner, repo, page, perPage, sort }) => {
+		const res = await IssueApi.getIssue(owner, repo, page, perPage, sort);
 		console.log("res값: ", res);
 		return res.data;
 	},

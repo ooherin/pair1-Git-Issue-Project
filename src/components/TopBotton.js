@@ -12,7 +12,7 @@ function TopButton() {
 		<S.Wrapper onClick={scrollToTop} type="button">
 			<S.Flex>
 				<RiArrowDropUpFill size={35} />
-				<TopText>TOP</TopText>
+				<S.TopText>TOP</S.TopText>
 			</S.Flex>
 		</S.Wrapper>
 	);
@@ -54,4 +54,5 @@ const TopText = styled.div`
 const S = {
 	Wrapper,
 	Flex,
+	TopText,
 };

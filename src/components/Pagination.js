@@ -1,39 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import theme from "styles/theme";
+import { useSearchParams } from "react-router-dom";
 
 //페이지네이션
 const Pagination = () => {
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	//현재페이지는 1
-	//파라미터의 currentPage 가져오는 법
-	const url = new URL(window.location.href);
-	let urlPage = url.searchParams.get("currentPage") || 1;
-	let urlPerPage = url.searchParams.get("perPage") || 10;
-	let urlSort = url.searchParams.get("sort") || "updated_at";
-	const params = new URLSearchParams(url.search);
-	const [currentPage, setCurrentPage] = useState(urlPage);
 
-	//렌더링 될떄마다 currentPage의 값을 변경시켜줌
-	//처음에 url에 currentPage라는 쿼리스트링이 없다면 1로 currentPage를 설정함.
-	useEffect(() => {
-		if (!urlPage) {
-			return setCurrentPage(1);
-		}
-		setCurrentPage(urlPage);
-	}, [url]);
+	//쿼리스트링 가져오기
+	const [searchParams, setSearchParams] = useSearchParams();
+	let perPage = searchParams.get("perPage") || 10;
+	let sort = searchParams.get("sort") || "updated_at";
+	let page = searchParams.get("currentPage") || 1;
+
+	//현재 페이지 : 기본값은 쿼리스트링의 page, 없으면 1(1페이지)
+	const [currentPage, setCurrentPage] = useState(page || 1);
 
 	//현재페이지 그룹 : 1~10버튼 => 1(그룹) / 11~20 => 2(그룹)
 	const [currentPageGroup, setCurrentPageGroup] = useState(
-		urlPage ? Math.ceil(urlPage / 10) : 1,
+		page ? Math.ceil(page / 10) : 1,
 	);
+
+	//페이지네이션 변수
 	const PagePerGroup = 10;
 	const totalIssueCount = 200;
-	const lastPageGroup = Math.ceil(totalIssueCount / urlPerPage / PagePerGroup);
-	const lastPage = Math.ceil(totalIssueCount / urlPerPage);
+	const lastPageGroup = Math.ceil(totalIssueCount / perPage / PagePerGroup);
+	const lastPage = Math.ceil(totalIssueCount / perPage);
 
 	//이전 버튼 그룹으로 이동(<)
 	const onMovePrevGroup = () => {
@@ -51,51 +44,51 @@ const Pagination = () => {
 		return setCurrentPageGroup(currentPageGroup + 1);
 	};
 
-	//맨 앞으로 이동(맨처음)
-	const onMoveFirstPage = () => {
-		navigate(`/main?currentPage=1&sort=${urlSort}&perPage=${urlPerPage}`);
-		// getIssueData(1);
-		setCurrentPageGroup(1);
-	};
-
-	//맨 뒤로 이동(맨뒤)
-	const onMoveLastPage = () => {
-		navigate(
-			`/main?currentPage=${lastPage}&sort=${urlSort}&perPage=${urlPerPage}`,
-		);
-		setCurrentPageGroup(lastPageGroup);
+	//양 끝 페이지로 이동(맨처음/ 맨끝)
+	const onMoveEndPage = targetPage => {
+		navigate(`/main?currentPage=${targetPage}&sort=${sort}&perPage=${perPage}`);
 	};
 
 	//해당 페이지로 url 이동
 	const onMovePage = e => {
 		const movePage = Number(e.target.innerText);
-		params.set("currentPage", movePage);
-		url.search = params.toString();
-		navigate(`/main${url.search}`);
+		navigate(`/main?currentPage=${movePage}&sort=${sort}&perPage=${perPage}`);
 	};
 
 	return (
-		<Wrapper>
-			<TextButton onClick={onMoveFirstPage}>맨처음</TextButton>
-			<ArrowButton onClick={onMovePrevGroup}>{"<"}</ArrowButton>
+		<S.Wrapper>
+			<S.TextButton
+				onClick={() => {
+					onMoveEndPage(1);
+				}}
+			>
+				맨처음
+			</S.TextButton>
+			<S.ArrowButton onClick={onMovePrevGroup}>{"<"}</S.ArrowButton>
 			{Array(10)
 				.fill()
 				.map((_, index) => {
 					const pageNumber = (currentPageGroup - 1) * 10 + index + 1;
 					return (
-						<Button
+						<S.Button
 							onClick={onMovePage}
 							key={Math.floor(Math.random() * 100000)}
 							pageNumber={pageNumber}
 							currentPage={currentPage}
 						>
 							{pageNumber}
-						</Button>
+						</S.Button>
 					);
 				})}
-			<ArrowButton onClick={onMoveNextGroup}>{">"}</ArrowButton>
-			<TextButton onClick={onMoveLastPage}>맨끝</TextButton>
-		</Wrapper>
+			<S.ArrowButton onClick={onMoveNextGroup}>{">"}</S.ArrowButton>
+			<S.TextButton
+				onClick={() => {
+					onMoveEndPage(lastPage);
+				}}
+			>
+				맨끝
+			</S.TextButton>
+		</S.Wrapper>
 	);
 };
 
@@ -139,3 +132,10 @@ const TextButton = styled.button`
 	font-size: 12px;
 	background-color: ${({ theme }) => theme.PALETTE.fontColor.white};
 `;
+
+const S = {
+	Wrapper,
+	Button,
+	ArrowButton,
+	TextButton,
+};
