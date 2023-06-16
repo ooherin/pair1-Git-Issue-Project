@@ -6,7 +6,7 @@ const Header = () => {
 		<>
 			<S.IssueHeader>
 				<S.Logo src="/image/logo3.png" />
-				<Title>Github API를 활용한 Issue 조회하기</Title>
+				<S.Title>Github API를 활용한 Issue 조회하기</S.Title>
 			</S.IssueHeader>
 		</>
 	);

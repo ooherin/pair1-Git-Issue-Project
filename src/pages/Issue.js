@@ -6,37 +6,32 @@ import { useNavigate } from "react-router-dom";
 import Loading from "components/Loading";
 import Pagination from "components/Pagination";
 import { getIssue } from "reducer/issue";
+import { useSearchParams } from "react-router-dom";
 
 const Issue = () => {
 	const dispatch = useDispatch();
 	const issueList = useSelector(state => state.issue.issues);
 	const { loading } = useSelector(state => state.issue.getIssueState);
 	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
+	let perPage = searchParams.get("perPage") || 10;
+	let sort = searchParams.get("sort") || "updated_at";
+	let page = searchParams.get("currentPage") || 1;
 
-	const url = new URL(window.location.href);
-	const urlPage = url.searchParams.get("currentPage") || 1;
-	const urlSort = url.searchParams.get("sort") || "updated_at";
-	const urlPerPage = url.searchParams.get("perPage") || 10;
-
-	//의존성 배열에 url이 아니라 urlPage를 넣어주어야 함
-	//url을 넣어주면 url은 useEffect내에서 바뀌지 않으므로 무한 렌더링 발생
+	//쿼리스트링의 변수가 바뀔 때마다 렌더링함.
 	useEffect(() => {
-		if (issueList.length === 0) {
-			getIssueData(1, 10);
-		} else {
-			getIssueData(urlPage, urlPerPage, urlSort);
-		}
-	}, [urlPage, urlSort, urlPerPage]);
+		getIssueData();
+	}, [page, sort, perPage]);
 
-	const getIssueData = async (page, perPage) => {
+	const getIssueData = async () => {
 		try {
 			const res = await dispatch(
 				getIssue({
 					owner: "angular",
 					repo: "angular-cli",
-					page: page,
-					limit: perPage,
-					filter: urlSort,
+					page,
+					perPage,
+					sort,
 				}),
 			);
 			console.log("getIssueData", res);
@@ -44,9 +39,6 @@ const Issue = () => {
 			console.error(err);
 		}
 	};
-
-	console.log("issueList", issueList);
-	console.log("loading", loading); // 로딩 상태 확인
 
 	// 각 issue 상세페이지 연결
 	const onNavigateDetailPage = issueId => {
@@ -61,7 +53,7 @@ const Issue = () => {
 				<>
 					<OneIssue
 						issue={issue}
-						key={Math.floor(Math.random() * 10000)}
+						key={issue.id}
 						onNavigate={() => onNavigateDetailPage(issue.number)}
 					/>
 				</>
