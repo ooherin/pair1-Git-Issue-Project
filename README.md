@@ -4,6 +4,8 @@
     
 ![main](https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/123865139/10a2a6bf-5dc0-4b24-8fcd-e17f05256240)
 
+
+
   </a>
   
 </div>
@@ -50,7 +52,9 @@
 
 <h2> 🎥 시연 영상 </h2>
 
-<!-- 영상 넣는 자리 -->
+
+https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/d803aa1e-b88f-4cb6-82c1-525e737bc9a2
+
 
 <br>
 
