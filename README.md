@@ -52,16 +52,18 @@
 
 <h2> 🎥 시연 영상 </h2>
 
-반응형 ui
+<h3>반응형 ui</h3>
+
 https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/d803aa1e-b88f-4cb6-82c1-525e737bc9a2
 
+<h3>필터 기능</h3>
 
-필터 기능
 https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/6714f273-4fb3-41d2-8cd6-8f0dd083055b
 
 
-페이지네이션
-https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/b04ece19-71df-4ed1-8fea-7538e499601b
+<h3>페이지네이션</h3>
+
+https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/1d94148d-c581-4f43-9c55-7dced4a7d743
 
 
 
