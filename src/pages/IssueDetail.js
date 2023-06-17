@@ -58,7 +58,7 @@ const IssueDetail = () => {
 					</S.Container>
 					<S.AvatarBox>
 						<S.Avatar src={oneIssue.user?.avatar_url} />
-						<span>{oneIssue.user?.login}</span>
+						<S.Name>{oneIssue.user?.login}</S.Name>
 					</S.AvatarBox>
 					<S.Body>
 						<ReactMarkdown
@@ -73,7 +73,9 @@ const IssueDetail = () => {
 			{oneIssue.comments > 0 ? (
 				<Comment issueId={issueId} />
 			) : (
-				<S.Wrapper>댓글이 없습니다.</S.Wrapper>
+				<S.CommentContainer>
+					<S.Wrapper>댓글이 없습니다.</S.Wrapper>
+				</S.CommentContainer>
 			)}
 		</>
 	);
@@ -81,6 +83,10 @@ const IssueDetail = () => {
 export default IssueDetail;
 
 const Box = styled.div`
+	margin: 0px 10px 50px 10px;
+`;
+
+const CommentContainer = styled.div`
 	margin: 0px 10px 50px 10px;
 `;
 
@@ -104,7 +110,9 @@ const Wrapper = styled.div`
 		margin-bottom: 20px;
 	}
 `;
-
+const Name = styled.div`
+	font-weight: 600;
+`;
 const Container = styled.div`
 	width: 100%;
 	padding-bottom: 35px;
@@ -206,4 +214,6 @@ const S = {
 	LabelsWrapper,
 	LabelsContainer,
 	Labels,
+	Name,
+	CommentContainer,
 };
