@@ -19,7 +19,15 @@ const Issue = () => {
 	let page = searchParams.get("currentPage") || 1;
 
 	//쿼리스트링의 변수가 바뀔 때마다 렌더링함.
+	//에러핸들링 : 현재페이지가 마지막 페이지보다 큰 수일때 마지막 페이지로 연결
 	useEffect(() => {
+		const lastPage = Math.ceil(200 / perPage);
+		if (lastPage < page) {
+			page = lastPage;
+			return navigate(
+				`/main?currentPage=${lastPage}&sort=${sort}&perPage=${perPage}`,
+			);
+		}
 		getIssueData();
 	}, [page, sort, perPage]);
 

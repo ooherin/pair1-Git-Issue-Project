@@ -47,7 +47,7 @@ const Logo = styled.img`
 const Title = styled.div`
 	padding-left: 20px;
 	:hover {
-		color: #660099;
+		color: hotpink;
 		transition: scale(1.2);
 	}
 `;
