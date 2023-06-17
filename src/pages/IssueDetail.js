@@ -58,7 +58,7 @@ const IssueDetail = () => {
 					</S.Container>
 					<S.AvatarBox>
 						<S.Avatar src={oneIssue.user?.avatar_url} />
-						<span>{oneIssue.user?.login}</span>
+						<S.Name>{oneIssue.user?.login}</S.Name>
 					</S.AvatarBox>
 					<S.Body>
 						<ReactMarkdown
@@ -104,7 +104,9 @@ const Wrapper = styled.div`
 		margin-bottom: 20px;
 	}
 `;
-
+const Name = styled.div`
+	font-weight: 600;
+`;
 const Container = styled.div`
 	width: 100%;
 	padding-bottom: 35px;
@@ -206,4 +208,5 @@ const S = {
 	LabelsWrapper,
 	LabelsContainer,
 	Labels,
+	Name,
 };

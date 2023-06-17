@@ -3,6 +3,9 @@ import { Shadow, omitText } from "styles/common";
 import { MdOutlineChatBubbleOutline } from "react-icons/md";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { GoIssueOpened } from "react-icons/go";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 // OneIssue
 const OneIssue = ({ issue, onNavigate }) => {
@@ -16,17 +19,20 @@ const OneIssue = ({ issue, onNavigate }) => {
 		<S.Box>
 			<S.Wrapper onClick={onNavigate}>
 				<S.Container>
-					<div>
+					<S.Flex>
 						<S.Number>#{issue.number}</S.Number>
-						<S.Title>{issue.title}</S.Title>
-						<S.Comment>
-							<MdOutlineChatBubbleOutline size={20} />
-							<span>{issue.comments}</span>
-						</S.Comment>
-					</div>
-					<div>
-						<S.Content>{issue.body}</S.Content>
-					</div>
+						<S.Title>
+							<ReactMarkdown
+								children={issue.title}
+								remarkPlugins={[remarkGfm]}
+								rehypePlugins={[rehypeRaw]}
+							/>
+						</S.Title>
+						<S.UserContainer>
+							<S.Avatar src={issue.user?.avatar_url} />
+							{/* <S.Name>{issue.user?.login}</S.Name> */}
+						</S.UserContainer>
+					</S.Flex>
 					<div>
 						{issue.labels.length === 0 ? null : (
 							<S.LabelsContainer>
@@ -38,15 +44,21 @@ const OneIssue = ({ issue, onNavigate }) => {
 							</S.LabelsContainer>
 						)}
 					</div>
-					<S.Days>
-						<p>
-							<MdOutlineWatchLater sie={16} /> updated {updatedAt}
-						</p>
-						<p>
-							<GoIssueOpened size={16} />
-							opened on {createdAt}
-						</p>
-					</S.Days>
+					<S.Flex>
+						<S.Days>
+							<p>
+								<MdOutlineWatchLater sie={16} /> updated {updatedAt}
+							</p>
+							<p>
+								<GoIssueOpened size={16} />
+								opened on {createdAt}
+							</p>
+						</S.Days>
+						<S.Comment>
+							<MdOutlineChatBubbleOutline size={20} />
+							<span>{issue.comments}</span>
+						</S.Comment>
+					</S.Flex>
 				</S.Container>
 			</S.Wrapper>
 		</S.Box>
@@ -55,8 +67,32 @@ const OneIssue = ({ issue, onNavigate }) => {
 
 export default OneIssue;
 
+const Flex = styled.div`
+	display: flex;
+	position: relative;
+`;
+
+const Name = styled.div`
+	width: 200px;
+	border-radius: 5px;
+	width: 100px;
+	padding-top: 10px;
+	padding-left: 10px;
+`;
+
+const UserContainer = styled.div`
+	font-weight: 600;
+	width: 50px;
+	display: block;
+`;
+
 const Box = styled.div`
 	margin: 0 10px;
+`;
+
+const Avatar = styled.img`
+	width: 50px;
+	border-radius: 50%;
 `;
 
 const Wrapper = styled.div`
@@ -106,6 +142,8 @@ const Title = styled.p`
 	${omitText}
 	padding: 0 20px;
 	font-weight: 700;
+	height: 50px;
+	margin-right: 30px;
 
 	@media ${({ theme }) => theme.DEVICE.pc} {
 		text-align: center;
@@ -124,6 +162,9 @@ const Title = styled.p`
 const Comment = styled.p`
 	display: flex;
 	align-items: flex-end;
+	position: absolute;
+	right: 60px;
+	bottom: 10px;
 
 	span {
 		margin-left: 6px;
@@ -193,4 +234,8 @@ const S = {
 	LabelsContainer,
 	Labels,
 	Days,
+	Flex,
+	Avatar,
+	UserContainer,
+	Name,
 };
