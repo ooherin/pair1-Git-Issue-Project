@@ -35,7 +35,7 @@ const OneIssue = ({ issue, onNavigate }) => {
 					</S.Flex>
 					<div>
 						{issue.labels.length === 0 ? null : (
-							<S.LabelsContainer>
+							<S.LabelsContainer style={{ justifyContent: "flex-start" }}>
 								{issue.labels.map((label, idx) => (
 									<S.Labels key={idx} color={label.color}>
 										{label.name}
@@ -69,7 +69,6 @@ export default OneIssue;
 
 const Flex = styled.div`
 	display: flex;
-	position: relative;
 `;
 
 const Name = styled.div`
@@ -127,9 +126,11 @@ const Container = styled.div`
 		}
 	}
 
+	div:first-of-type {
+		margin-bottom: 20px;
+	}
 	div:last-of-type {
 		margin: 0;
-		justify-content: flex-start;
 	}
 `;
 
@@ -155,25 +156,18 @@ const Title = styled.p`
 		width: 100%;
 	}
 	@media ${({ theme }) => theme.DEVICE.mobile} {
-		padding: 0;
+		padding: 10px 0;
 	}
 `;
 
 const Comment = styled.p`
 	display: flex;
 	align-items: flex-end;
-	position: absolute;
-	right: 60px;
-	bottom: 10px;
+	margin: 0;
 
 	span {
 		margin-left: 6px;
 	}
-`;
-
-const Content = styled.p`
-	width: 100%;
-	${omitText}
 `;
 
 const LabelsContainer = styled.div`
@@ -230,7 +224,6 @@ const S = {
 	Number,
 	Title,
 	Comment,
-	Content,
 	LabelsContainer,
 	Labels,
 	Days,

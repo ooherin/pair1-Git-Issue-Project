@@ -28,7 +28,7 @@ const Container = styled.div`
 `;
 
 const Img = styled.img`
-	width: 300px;
+	width: 200px;
 `;
 const Text = styled.div`
 	font-size: 20px;

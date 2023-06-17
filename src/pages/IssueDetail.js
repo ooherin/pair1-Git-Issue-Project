@@ -73,7 +73,9 @@ const IssueDetail = () => {
 			{oneIssue.comments > 0 ? (
 				<Comment issueId={issueId} />
 			) : (
-				<S.Wrapper>댓글이 없습니다.</S.Wrapper>
+				<S.CommentContainer>
+					<S.Wrapper>댓글이 없습니다.</S.Wrapper>
+				</S.CommentContainer>
 			)}
 		</>
 	);
@@ -81,6 +83,10 @@ const IssueDetail = () => {
 export default IssueDetail;
 
 const Box = styled.div`
+	margin: 0px 10px 50px 10px;
+`;
+
+const CommentContainer = styled.div`
 	margin: 0px 10px 50px 10px;
 `;
 
@@ -209,4 +215,5 @@ const S = {
 	LabelsContainer,
 	Labels,
 	Name,
+	CommentContainer,
 };

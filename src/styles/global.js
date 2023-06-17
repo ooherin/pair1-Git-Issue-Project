@@ -7,6 +7,11 @@ const GlobalStyles = createGlobalStyle`
 ${reset}
   * {
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  html {
+    font-family: 'Poppins', sans-serif;
   }
 
   body {

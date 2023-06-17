@@ -42,12 +42,12 @@ const Comment = ({ issueId }) => {
 						<S.OneComment comments={comments}>
 							<S.FlexBetween>
 								<S.CreateDate>작성일 : {createdAt}</S.CreateDate>
-								<S.Relative>
+								<S.FlexAvatar>
 									<S.AvatarBox>
 										<S.Avatar src={comment.user?.avatar_url} />
 										<span>{comment.user?.login}</span>
 									</S.AvatarBox>
-								</S.Relative>
+								</S.FlexAvatar>
 							</S.FlexBetween>
 							<S.Body>
 								<ReactMarkdown
@@ -141,22 +141,28 @@ const CreateDate = styled.div`
 	padding-left: 10px;
 `;
 const AvatarBox = styled.div`
-	width: 100%;
 	display: flex;
 	align-items: center;
-	position: absolute;
-	left: 0;
-	padding-top: 5px;
+
+	span {
+		@media ${({ theme }) => theme.DEVICE.mobile} {
+			display: none;
+		}
+	}
 `;
-const Relative = styled.div`
-	width: 160px;
-	position: relative;
+const FlexAvatar = styled.div`
+	display: flex;
+	margin-right: 10px;
 `;
 
 const Avatar = styled.img`
 	margin-right: 10px;
 	border-radius: 50%;
-	width: 46px;
+	width: 40px;
+
+	@media ${({ theme }) => theme.DEVICE.mobile} {
+		margin: 0;
+	}
 `;
 
 const OneComment = styled.div`
@@ -178,5 +184,5 @@ const S = {
 	CommentTitle,
 	FlexBetween,
 	CreateDate,
-	Relative,
+	FlexAvatar,
 };
