@@ -66,10 +66,14 @@ const Pagination = () => {
 					맨처음
 				</S.TextButton>
 				<S.ArrowButton onClick={onMovePrevGroup}>{"<"}</S.ArrowButton>
-				{Array(10)
+				{Array(PagePerGroup)
 					.fill()
 					.map((_, index) => {
 						const pageNumber = (currentPageGroup - 1) * 10 + index + 1;
+						//마지막 페이지보다 pageNumber가 더 크면 (없는 페이지이면) 얼리 리턴
+						if (pageNumber > lastPage) {
+							return;
+						}
 						return (
 							<S.Button
 								onClick={onMovePage}
