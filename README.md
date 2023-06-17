@@ -56,6 +56,11 @@
 https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/d803aa1e-b88f-4cb6-82c1-525e737bc9a2
 
 
+
+https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/6714f273-4fb3-41d2-8cd6-8f0dd083055b
+
+
+
 <br>
 
 <h2> 📂 폴더 구조 </h2>
