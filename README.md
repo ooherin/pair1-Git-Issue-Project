@@ -52,6 +52,18 @@
 
 <h2> 🎥 시연 영상 </h2>
 
+<h3>렌딩페이지 추가 (23.6.20)</h3>
+
+https://github.com/ooherin/pair1-Git-Issue-Project/assets/125418818/8328b6ae-4fab-40e3-81e1-cd4c47151869
+
+<h3>페이지네이션</h3>
+
+https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/1d94148d-c581-4f43-9c55-7dced4a7d743
+
+<h3>인피니티 스크롤 추가(23.6.20)</h3>
+
+https://github.com/ooherin/pair1-Git-Issue-Project/assets/125418818/85331c38-1df7-4241-ae3c-4e6d8828bd92
+
 <h3>반응형 ui</h3>
 
 https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/d803aa1e-b88f-4cb6-82c1-525e737bc9a2
@@ -59,12 +71,6 @@ https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/d
 <h3>필터 기능</h3>
 
 https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/6714f273-4fb3-41d2-8cd6-8f0dd083055b
-
-
-<h3>페이지네이션</h3>
-
-https://github.com/KIT-Frontend-Team1/pair1-Git-Issue-Project/assets/125418818/1d94148d-c581-4f43-9c55-7dced4a7d743
-
 
 
 <br>
