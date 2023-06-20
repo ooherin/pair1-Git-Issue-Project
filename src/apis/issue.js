@@ -3,6 +3,7 @@ import { axioseInstance } from "./@core";
 const IssueApi = {
 	// 전체 issue 가져오기
 	getIssue(owner, repo, page = 1, perPage = 10, sort = "updated_at") {
+		console.log("getAPI", owner, repo, page, perPage, sort);
 		return axioseInstance.get(
 			`/repos/${owner}/${repo}/issues?page=${page}&per_page=${perPage}&sort=${sort}`,
 		);

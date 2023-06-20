@@ -46,7 +46,9 @@ const Pagination = () => {
 
 	//양 끝 페이지로 이동(맨처음/ 맨끝)
 	const onMoveEndPage = targetPage => {
-		navigate(`/main?currentPage=${targetPage}&sort=${sort}&perPage=${perPage}`);
+		setSearchParams("currentPage", targetPage);
+		setSearchParams("sort", sort);
+		setSearchParams("perPage", perPage);
 	};
 
 	//해당 페이지로 url 이동
